@@ -2,9 +2,9 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  #------------------------------------------------------------
-  #------ Creating VM: a loadbalancer with haproxy installed
-  #------------------------------------------------------------
+  #-----------------------------------------------------------------------
+  #------ Creating VM: local asible control machine to provision k8s nodes
+  #-----------------------------------------------------------------------
   config.vm.define "control" do |control|
     control.vm.box = "bento/ubuntu-18.04"
     control.vm.hostname = 'control.vagrant'
@@ -41,9 +41,13 @@ Vagrant.configure("2") do |config|
       # Customize the amount of memory on the VM:
       vb.memory = "2048"
     end
-    #------ Provisioning via shell. apache2 setup
+    #------ Provisioning via shell
     master.vm.provision "shell", inline: <<-SHELL
       apt-get update
+      apt-get install -y software-properties-common
+      add-apt-repository -y ppa:ansible/ansible
+      apt-get update
+      apt-get install -y ansible
     SHELL
   end
   #-----------------------------------------------------------
@@ -62,7 +66,6 @@ Vagrant.configure("2") do |config|
       # Customize the amount of memory on the VM:
       vb.memory = "2048"
     end
-    #------ Provisioning through Ansible as per guidelines in exercise
     worker1.vm.provision "shell", inline: <<-SHELL
       apt-get update
     SHELL
@@ -83,7 +86,6 @@ Vagrant.configure("2") do |config|
       # Customize the amount of memory on the VM:
       vb.memory = "2048"
     end
-    #------ Provisioning through Ansible as per guidelines in exercise
     worker2.vm.provision "shell", inline: <<-SHELL
       apt-get update
     SHELL
