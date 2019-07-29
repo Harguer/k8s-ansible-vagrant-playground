@@ -44,10 +44,6 @@ Vagrant.configure("2") do |config|
     #------ Provisioning via shell
     master.vm.provision "shell", inline: <<-SHELL
       apt-get update
-      apt-get install -y software-properties-common
-      add-apt-repository -y ppa:ansible/ansible
-      apt-get update
-      apt-get install -y ansible
     SHELL
   end
   #-----------------------------------------------------------
