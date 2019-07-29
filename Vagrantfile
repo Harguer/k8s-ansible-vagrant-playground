@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   #-----------------------------------------------------------------------
-  #------ Creating VM: local asible control machine to provision k8s nodes
+  #------Creating VM: local ansible control machine to provision k8s nodes
   #-----------------------------------------------------------------------
   config.vm.define "control" do |control|
     control.vm.box = "bento/ubuntu-18.04"
